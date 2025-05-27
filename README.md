@@ -1,12 +1,12 @@
-# Chemical Component Analysis of PM₂.₅ at BMKG Kemayoran
+## Chemical Component Analysis of PM₂.₅ at BMKG Kemayoran
 
-## Project Overview
+### Project Overview
 
 This project focuses on the chemical component analysis of PM₂.₅ (Particulate Matter with a diameter of 2.5 micrometers or less) samples collected from BMKG Kemayoran during the INDFIN campaign. The analysis includes descriptive statistics, seasonal comparisons (Dry vs. Wet seasons), and Principal Component Analysis (PCA) for both X-Ray Fluorescence (XRF) and Ion Chromatography (IC) data. Additionally, ionic balance calculations are performed using the IC data.
 
 The primary goal is to identify and characterize the chemical composition of PM₂.₅ and explore seasonal variations and potential sources of pollutants.
 
-## Repository Structure
+### Repository Structure
 ```
 chem-comp-pm2p5-indfin/
 ├── jupyter/
@@ -30,7 +30,7 @@ chem-comp-pm2p5-indfin/
 ├── xrf_elements_pca_loading_plot_pc1_pc2.png # Output: PCA loading plot for XRF data (PC1 vs PC2)
 └── xrf_elements_pca_score_plot_pc1_pc2.png  # Output: PCA score plot for XRF data (PC1 vs PC2)
 ```
-## Data
+### Data
 
 The analysis utilizes two main data files located in the `data/` directory:
 
@@ -39,7 +39,7 @@ The analysis utilizes two main data files located in the `data/` directory:
 
 Sample IDs in both files are used to distinguish between Dry season (e.g., 'IND_A_xxx') and Wet season (e.g., 'IND_B_xxx') samples.
 
-## Analysis
+### Analysis
 
 The core analysis is performed in the `jupyter/PCA_ChemComp_Analysis.ipynb` Jupyter notebook, which utilizes helper functions defined in `code/process.py`. The analysis steps include:
 
@@ -72,7 +72,7 @@ The core analysis is performed in the `jupyter/PCA_ChemComp_Analysis.ipynb` Jupy
 
 The `doc/ChemComp_Analysis.pdf` file provides a preliminary analysis report including PCA interpretations and seasonal chemistry highlights.
 
-## Results
+### Results
 
 The main outputs of this analysis are:
 
@@ -86,7 +86,7 @@ The main outputs of this analysis are:
 
 Key findings can be inferred from the seasonal statistics tables (e.g., significantly different concentrations of certain species between seasons) and PCA plots (e.g., grouping of samples by season, identification of elements/ions that co-vary). The PDF report also details interpretations, such as secondary sulfate formation in the dry season and sea salt influence in the wet season.
 
-## How to Run
+### How to Run
 
 1.  **Prerequisites**:
     * Python 3
@@ -101,7 +101,7 @@ Key findings can be inferred from the seasonal statistics tables (e.g., signific
 
 The notebook will generate output tables in the console and save plots and CSV files to the `results/` directory.
 
-## Dependencies
+### Dependencies
 
 Based on the import statements in the `jupyter/PCA_ChemComp_Analysis.ipynb` notebook and `code/process.py` script, the following Python libraries are required:
 
