@@ -9,13 +9,16 @@ The primary goal is to identify and characterize the chemical composition of PM�
 ## Repository Structure
 ```
 chem-comp-pm2p5-indfin/
-├── PCA_ChemComp_Analysis.ipynb  # Jupyter notebook with the main analysis workflow
+├── jupyter/
+│   └── PCA_ChemComp_Analysis.ipynb  # Jupyter notebook with the main analysis workflow
 ├── README.md                    # This README file
 ├── code/
-│   └── process.py           # Python script with helper functions for data loading, PReparation, statistical analysis, and PCA
+│   └── process.py           # Python script with helper functions for data loading, preparation, statistical analysis, and PCA
 ├── data/
 │   ├── XRF_IC_Kemayoran - IC.csv    # Input data: Ion Chromatography results
 │   └── XRF_IC_Kemayoran - XRF.csv   # Input data: X-Ray Fluorescence results
+├── doc/
+│   └── ChemComp_Analysis.pdf        # PDF document detailing the analysis
 └── results/
 ├── ic_seasonal_statistics.csv   # Output: Seasonal statistics for IC data
 ├── xrf_seasonal_statistics.csv  # Output: Seasonal statistics for XRF data
@@ -38,7 +41,7 @@ Sample IDs in both files are used to distinguish between Dry season (e.g., 'IND_
 
 ## Analysis
 
-The core analysis is performed in the `PCA_ChemComp_Analysis.ipynb` Jupyter notebook, which likely utilizes helper functions defined in `code/process.py`. The analysis steps include:
+The core analysis is performed in the `jupyter/PCA_ChemComp_Analysis.ipynb` Jupyter notebook, which utilizes helper functions defined in `code/process.py`. The analysis steps include:
 
 1.  **Data Loading and Preparation**:
     * Loading XRF and IC data from CSV files.
@@ -67,19 +70,21 @@ The core analysis is performed in the `PCA_ChemComp_Analysis.ipynb` Jupyter note
         * Loading plots for PC1 vs PC2 (`xrf_elements_pca_loading_plot_pc1_pc2.png`, `ic_ions_pca_loading_plot_pc1_pc2.png`).
         * Score plots for PC1 vs PC2, colored by season (`xrf_elements_pca_score_plot_pc1_pc2.png`, `ic_ions_pca_score_plot_pc1_pc2.png`).
 
+The `doc/ChemComp_Analysis.pdf` file provides a preliminary analysis report including PCA interpretations and seasonal chemistry highlights.
+
 ## Results
 
 The main outputs of this analysis are:
 
 * **Seasonal Statistics Tables**:
-    * `xrf_seasonal_statistics.csv`: Shows mean, median, standard deviation, and p-values from Mann-Whitney U tests for XRF elemental ratios, comparing Dry and Wet seasons.
+    * `xrf_seasonal_statistics.csv`: Shows mean, median, standard deviation, and p-values from Mann-Whitney U tests for XRF elemental concentrations (the README previously stated ratios, but the PDF and common practice suggest concentrations or mass fractions, which are akin to ratios against total mass if not explicitly stated as elemental ratios against a specific element), comparing Dry and Wet seasons.
     * `ic_seasonal_statistics.csv`: Shows mean, median, standard deviation, and p-values from Mann-Whitney U tests for IC ion concentrations (in µg/m³), comparing Dry and Wet seasons.
 * **PCA Results**:
-    * Explained variance ratios and loadings for XRF elements and IC ions, indicating the contribution of different chemical species to the principal components.
+    * Explained variance ratios and loadings for XRF elements and IC ions, indicating the contribution of different chemical species to the principal components. These are detailed in the Jupyter Notebook output and the `doc/ChemComp_Analysis.pdf`.
 * **Plots**:
-    * Visualizations of ionic balance, PCA scree plots, loading plots, and score plots, providing insights into the data structure, dominant chemical profiles, and seasonal differences.
+    * Visualizations of ionic balance, PCA scree plots, loading plots, and score plots, providing insights into the data structure, dominant chemical profiles, and seasonal differences. These are saved in the `results/` directory.
 
-Key findings can be inferred from the seasonal statistics tables (e.g., significantly different concentrations of certain species between seasons) and PCA plots (e.g., grouping of samples by season, identification of elements/ions that co-vary).
+Key findings can be inferred from the seasonal statistics tables (e.g., significantly different concentrations of certain species between seasons) and PCA plots (e.g., grouping of samples by season, identification of elements/ions that co-vary). The PDF report also details interpretations, such as secondary sulfate formation in the dry season and sea salt influence in the wet season.
 
 ## How to Run
 
@@ -91,21 +96,21 @@ Key findings can be inferred from the seasonal statistics tables (e.g., signific
     * Clone this repository.
     * Ensure the data files (`XRF_IC_Kemayoran - XRF.csv` and `XRF_IC_Kemayoran - IC.csv`) are present in the `data/` directory.
 3.  **Execution**:
-    * Open and run the `PCA_ChemComp_Analysis.ipynb` notebook.
-    * Alternatively, the Python script `code/fmi_samples.py` contains the functions used in the notebook and could potentially be run if adapted into a main executable script, though the primary interface appears to be the notebook.
+    * Open and run the `jupyter/PCA_ChemComp_Analysis.ipynb` notebook.
+    * Alternatively, the Python script `code/process.py` contains the functions used in the notebook and could potentially be run if adapted into a main executable script, though the primary interface appears to be the notebook.
 
-The notebook will generate output tables in the console and save plots and CSV files to the `results/` directory (or the root directory based on the notebook's save paths for some files).
+The notebook will generate output tables in the console and save plots and CSV files to the `results/` directory.
 
 ## Dependencies
 
-Based on the import statements in the `PCA_ChemComp_Analysis.ipynb` notebook and `code/fmi_samples.py` script, the following Python libraries are required:
+Based on the import statements in the `jupyter/PCA_ChemComp_Analysis.ipynb` notebook and `code/process.py` script, the following Python libraries are required:
 
 * pandas
 * numpy
 * scipy (specifically `scipy.stats.mannwhitneyu`)
 * scikit-learn (specifically `sklearn.preprocessing.StandardScaler` and `sklearn.decomposition.PCA`)
 * matplotlib
-* openpyxl (though CSV files are used as primary input in the notebook, `load_and_prepare_data` function has .xlsx handling capabilities)
+* openpyxl (though CSV files are used as primary input in the notebook, `load_and_prepare_data` function in `process.py` has .xlsx handling capabilities)
 
 These can typically be installed using pip:
 ```bash
