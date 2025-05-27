@@ -1,8 +1,8 @@
-# Chemical Component Analysis of PM₂.₅ during INDFIN Campaign
+# Chemical Component Analysis of PM₂.₅ at BMKG Kemayoran
 
 ## Project Overview
 
-This project focuses on the chemical component analysis of PM₂.₅ (Particulate Matter with a diameter of 2.5 micrometers or less) samples collected during the INDFIN campaign. The analysis includes descriptive statistics, seasonal comparisons (Dry vs. Wet seasons), and Principal Component Analysis (PCA) for both X-Ray Fluorescence (XRF) and Ion Chromatography (IC) data. Additionally, ionic balance calculations are performed using the IC data.
+This project focuses on the chemical component analysis of PM₂.₅ (Particulate Matter with a diameter of 2.5 micrometers or less) samples collected from BMKG Kemayoran during the INDFIN campaign. The analysis includes descriptive statistics, seasonal comparisons (Dry vs. Wet seasons), and Principal Component Analysis (PCA) for both X-Ray Fluorescence (XRF) and Ion Chromatography (IC) data. Additionally, ionic balance calculations are performed using the IC data.
 
 The primary goal is to identify and characterize the chemical composition of PM₂.₅ and explore seasonal variations and potential sources of pollutants.
 
