@@ -12,7 +12,7 @@ chem-comp-pm2p5-indfin/
 ├── PCA_ChemComp_Analysis.ipynb  # Jupyter notebook with the main analysis workflow
 ├── README.md                    # This README file
 ├── code/
-│   └── fmi_samples.py           # Python script with helper functions for data loading, PReparation, statistical analysis, and PCA
+│   └── process.py           # Python script with helper functions for data loading, PReparation, statistical analysis, and PCA
 ├── data/
 │   ├── XRF_IC_Kemayoran - IC.csv    # Input data: Ion Chromatography results
 │   └── XRF_IC_Kemayoran - XRF.csv   # Input data: X-Ray Fluorescence results
