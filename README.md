@@ -38,7 +38,7 @@ Sample IDs in both files are used to distinguish between Dry season (e.g., 'IND_
 
 ## Analysis
 
-The core analysis is performed in the `PCA_ChemComp_Analysis.ipynb` Jupyter notebook, which likely utilizes helper functions defined in `code/fmi_samples.py`. The analysis steps include:
+The core analysis is performed in the `PCA_ChemComp_Analysis.ipynb` Jupyter notebook, which likely utilizes helper functions defined in `code/process.py`. The analysis steps include:
 
 1.  **Data Loading and Preparation**:
     * Loading XRF and IC data from CSV files.
