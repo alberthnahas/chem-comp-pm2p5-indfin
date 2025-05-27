@@ -35,7 +35,7 @@ chem-comp-pm2p5-indfin/
 The analysis utilizes two main data files located in the `data/` directory:
 
 * **`XRF_IC_Kemayoran - XRF.csv`**: Contains elemental concentration data obtained from X-Ray Fluorescence analysis. Columns include sample IDs and concentrations of various elements (e.g., Na, Mg, Al, Si, S, Cl, K, Ca, V, Fe, Ni, Zn, Pb).
-* **`XRF_IC_Kemayoran - IC.csv`**: Contains ionic concentration data obtained from Ion Chromatography. Columns include sample IDs and concentrations of various ions (e.g., Cl, NO3-N, NO3, SO4-S, SO4, Na, NH4-N, NH4, K, Mg, Ca).
+* **`XRF_IC_Kemayoran - IC.csv`**: Contains ionic concentration data obtained from Ion Chromatography. Columns include sample IDs and concentrations of various ions (e.g., Cl⁻, NO₃⁻-N, NO₃⁻, SO₄²⁻-S, SO₄²⁻, Na⁺, NH₄⁺-N, NH₄⁺, K⁺, Ca²⁺, Mg²⁺).
 
 Sample IDs in both files are used to distinguish between Dry season (e.g., 'IND_A_xxx') and Wet season (e.g., 'IND_B_xxx') samples.
 
@@ -55,7 +55,7 @@ The core analysis is performed in the `jupyter/PCA_ChemComp_Analysis.ipynb` Jupy
     * Saving seasonal statistics to CSV files (`xrf_seasonal_statistics.csv`, `ic_seasonal_statistics.csv`).
 
 3.  **Ionic Balance Calculation (for IC data)**:
-    * Calculating the microequivalents (µeq/m³) for major cations (Na+, NH4+, K+, Mg2+, Ca2+) and anions (Cl-, NO3-, SO42-).
+    * Calculating the microequivalents (µeq/m³) for major cations (Na⁺, NH₄⁺, K⁺, Ca²⁺, Mg²⁺) and anions (Cl⁻, NO₃⁻, SO₄²⁻).
     * Plotting total cations vs. total anions to assess ionic balance.
     * Performing a linear regression on the ionic balance.
     * Saving the ionic balance plot (`ionic_balance_plot.png`).
