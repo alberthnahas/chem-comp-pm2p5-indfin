@@ -1,8 +1,8 @@
 // Application data from the provided JSON
 const appData = {
   "xrf_pca": {
-    "PC": [1, 2, 3, 4],
-    "Explained_Variance": [31.71, 19.83, 14.46, 8.56],
+    "PC": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "Explained_Variance": [31.71, 19.83, 14.46, 8.22, 7.84, 6.22, 5.26, 2.20, 1.99, 1.29, 0.52, 0.43, 0.04],
     "Dominant_Loadings": [
       "S (0.93), Zn (-0.87), Cl (-0.85), Al (-0.67), Fe (-0.64), Na (-0.66)",
       "Ni (0.66), Mg (0.64), Na (0.43), Al (-0.49), Si (-0.60), Fe (-0.49), K (-0.59)",
@@ -24,8 +24,8 @@ const appData = {
     "Season_Pattern": ["Dry > Wet", "Dry > Wet", "Wet > Dry", "Wet > Dry", "Wet > Dry", "Wet > Dry", "Wet > Dry", "Wet > Dry", "Wet > Dry", "Wet > Dry", "Dry > Wet", "No diff", "No diff"]
   },
   "ic_pca": {
-    "PC": [1, 2, 3, 4],
-    "Explained_Variance": [43.10, 21.55, 16.72, 9.84],
+    "PC": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "Explained_Variance": [43.10, 21.55, 16.72, 9.84, 6.32, 1.99, 0.29, 0.13, 0.07],
     "Dominant_Loadings": [
       "SO4²⁻ (0.98), NH4⁺ (0.96), K⁺ (0.63), Ca²⁺ (0.47), NO3⁻ (0.25)",
       "Cl⁻ (0.88), Na⁺ (0.89), K⁺ (0.60)",
