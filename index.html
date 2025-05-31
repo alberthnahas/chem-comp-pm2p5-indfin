@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM2.5 Chemical Composition Dashboard - INDFIN</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body data-color-scheme="dark">
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-title">
+                        <h1>PM<sub>2.5</sub> Chemical Composition Analysis Dashboard</h1>
+                        <p class="header-subtitle">The INDFIN Project - A Collaboration between BMKG Indonesia and FMI Finland</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn--outline btn--sm" id="exportBtn">Export Data</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <nav class="dashboard-nav">
+            <div class="container">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-tab="overview">Overview</button>
+                    <button class="nav-tab" data-tab="xrf-analysis">XRF Analysis</button>
+                    <button class="nav-tab" data-tab="ic-analysis">IC Analysis</button>
+                    <button class="nav-tab" data-tab="seasonal">Seasonal Comparison</button>
+                    <button class="nav-tab" data-tab="ratios">Chemical Ratios</button>
+                    <button class="nav-tab" data-tab="methods">Methods Comparison</button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="dashboard-content">
+            <div class="container">
+                <section id="overview" class="tab-content active">
+                    <div class="overview-grid">
+                        <div class="overview-summary">
+                            <h2>Executive Summary</h2>
+                            <p>Comprehensive analysis of PM<sub>2.5</sub> chemical composition using X-ray Fluorescence (XRF) and Ion Chromatography (IC) methods reveals distinct seasonal patterns and source contributions in atmospheric aerosols.</p>
+                            
+                            <div class="key-findings">
+                                <h3>Key Findings</h3>
+                                <ul>
+                                    <li>Secondary sulfate aerosols dominate during dry season</li>
+                                    <li>Sea salt influence more pronounced in wet season</li>
+                                    <li>Strong correlation between XRF and IC methods validates cross-method consistency</li>
+                                    <li>Non-sea-salt sulfate contributes >95% of total sulfate</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value">74.54%</div>
+                                <div class="stat-label">Total XRF Variance Explained (4 PCs)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">91.21%</div>
+                                <div class="stat-label">Total IC Variance Explained (4 PCs)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">1.15</div>
+                                <div class="stat-label">Ionic Balance Slope</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value">See Ratios Tab</div>
+                                <div class="stat-label">SO₄²⁻/NO₃⁻ Ratio Insights</div>
+                            </div>
+                        </div>
+
+                        <div class="methodology-card card">
+                            <div class="card__header">
+                                <h3>Methodology</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="method-grid">
+                                    <div class="method-item">
+                                        <h4>XRF Analysis</h4>
+                                        <p>X-ray Fluorescence spectroscopy for elemental composition determination of PM<sub>2.5</sub> samples.</p>
+                                    </div>
+                                    <div class="method-item">
+                                        <h4>IC Analysis</h4>
+                                        <p>Ion Chromatography for water-soluble ionic species measurement in atmospheric particles.</p>
+                                    </div>
+                                    <div class="method-item">
+                                        <h4>PCA Analysis</h4>
+                                        <p>Principal Component Analysis to identify source contributions and chemical associations.</p>
+                                    </div>
+                                    <div class="method-item">
+                                        <h4>Seasonal Comparison</h4>
+                                        <p>Statistical analysis of dry vs wet season variations using Mann-Whitney U test.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="xrf-analysis" class="tab-content">
+                    <div class="analysis-grid">
+                        <div class="chart-section">
+                            <div class="chart-header">
+                                <h2>XRF Principal Component Analysis</h2>
+                                <p>Variance explained by each principal component</p>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="xrfVarianceChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="loadings-section">
+                            <div class="chart-header">
+                                <h3>Component Loadings</h3>
+                                <div class="pc-selector">
+                                    <button class="btn btn--sm pc-btn active" data-pc="1">PC1</button>
+                                    <button class="btn btn--sm pc-btn" data-pc="2">PC2</button>
+                                    <button class="btn btn--sm pc-btn" data-pc="3">PC3</button>
+                                    <button class="btn btn--sm pc-btn" data-pc="4">PC4</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="xrfLoadingsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="interpretation-panel">
+                            <h3>Principal Component Interpretations</h3>
+                            <div id="xrfInterpretations" class="interpretations-grid">
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="ic-analysis" class="tab-content">
+                    <div class="analysis-grid">
+                        <div class="chart-section">
+                            <div class="chart-header">
+                                <h2>IC Principal Component Analysis</h2>
+                                <p>Variance explained by each principal component</p>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="icVarianceChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="loadings-section">
+                            <div class="chart-header">
+                                <h3>Component Loadings</h3>
+                                <div class="pc-selector">
+                                    <button class="btn btn--sm ic-pc-btn active" data-pc="1">PC1</button>
+                                    <button class="btn btn--sm ic-pc-btn" data-pc="2">PC2</button>
+                                    <button class="btn btn--sm ic-pc-btn" data-pc="3">PC3</button>
+                                    <button class="btn btn--sm ic-pc-btn" data-pc="4">PC4</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="icLoadingsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="interpretation-panel">
+                            <h3>Principal Component Interpretations</h3>
+                            <div id="icInterpretations" class="interpretations-grid">
+                                </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="seasonal" class="tab-content">
+                    <div class="seasonal-grid">
+                        <div class="seasonal-controls">
+                            <h2>Seasonal Comparison</h2>
+                            <div class="control-group">
+                                <label class="form-label">Analysis Method:</label>
+                                <div class="method-toggle">
+                                    <button class="btn btn--sm method-btn active" data-method="xrf">XRF Elements</button>
+                                    <button class="btn btn--sm method-btn" data-method="ic">IC Ions</button>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="form-label">Display Mode:</label>
+                                <div class="display-toggle">
+                                    <button class="btn btn--sm display-btn active" data-display="absolute">Absolute Values</button>
+                                    <button class="btn btn--sm display-btn" data-display="percentage">% Difference</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-section seasonal-chart">
+                            <div class="chart-container">
+                                <canvas id="seasonalChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="significance-legend">
+                            <h4>Statistical Significance Legend</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <span class="legend-color significant"></span>
+                                    <span>p < 0.05 (Significant)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color not-significant"></span>
+                                    <span>p ≥ 0.05 (Not Significant)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="ratios" class="tab-content">
+                    <div class="ratios-2x2-grid"> <div class="chart-card card"> 
+                            <div class="card__header">
+                                <h3>Ionic Balance</h3>
+                            </div>
+                            <div class="card__body">
+                                <p class="chart-subtitle">Cation vs Anion Equivalents</p>
+                                <div class="chart-container" style="height: 280px;"> <canvas id="ionicBalanceChart"></canvas>
+                                </div>
+                                <div class="balance-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Slope:</span>
+                                        <span class="stat-value" id="ionicBalanceSlope">1.15</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Intercept:</span>
+                                        <span class="stat-value" id="ionicBalanceIntercept">-0.01</span>
+                                    </div>
+                                    <div class="interpretation">
+                                        <p id="ionicBalanceInterpretation">Slight excess of cations over anions on average</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card card">
+                            <div class="card__header">
+                                <h3>SO₄²⁻/NO₃⁻ Ratio Distribution</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="ratio-interpretation">
+                                    <p>Distribution of SO₄²⁻/NO₃⁻ ratios, indicating the prevalence of different atmospheric conditions or sources. Dominance of sulfur-based secondary aerosol from SO₂ emissions.</p>
+                                </div>
+                                <div class="chart-container" style="height: 280px;"> 
+                                    <canvas id="so4no3DistributionChart"></canvas> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card card">
+                            <div class="card__header">
+                                <h3>NH₄⁺ Neutralization Ratio Distribution</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="ratio-interpretation">
+                                    <p>Distribution of NH₄⁺ neutralization ratios. Under-neutralization indicates some sulfate exists as acidic species.</p>
+                                </div>
+                                <div class="chart-container" style="height: 280px;">
+                                    <canvas id="nh4NeutralizationDistributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-card card">
+                            <div class="card__header">
+                                <h3>Non-Sea-Salt Sulfate (nss-SO₄²⁻)</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="nss-example">
+                                    <p><strong>Example:</strong></p>
+                                    <p>Total SO₄²⁻: 3.11 μg/m³</p>
+                                    <p>nss-SO₄²⁻: 3.07 μg/m³</p>
+                                </div>
+                                <div class="nss-interpretation">
+                                    <p>Anthropogenic SO₂ origin dominates (Contribution >95%).</p>
+                                </div>
+                                 <div class="chart-container" style="height: 280px;"> 
+                                    <canvas id="nssChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </section>
+
+                <section id="methods" class="tab-content">
+                    <div class="methods-grid">
+                        <div class="methods-header">
+                            <h2>Cross-Method Validation</h2>
+                            <p>Consistency assessment between XRF and IC analytical methods</p>
+                        </div>
+
+                        <div class="correlation-section">
+                            <div class="correlation-cards">
+                                <div class="correlation-card card">
+                                    <div class="card__header">
+                                        <h3>XRF-IC Sulfur Method Comparison</h3>
+                                    </div>
+                                    <div class="card__body">
+                                        <div class="correlation-chart">
+                                            <canvas id="sulfurCorrelationChart"></canvas>
+                                        </div>
+                                        <div class="correlation-stats">
+                                            <div class="status status--success">Strong and direct correlation</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="correlation-card card">
+                                    <div class="card__header">
+                                        <h3>XRF-IC Potassium Method Comparison</h3>
+                                    </div>
+                                    <div class="card__body">
+                                        <div class="correlation-chart">
+                                            <canvas id="potassiumCorrelationChart"></canvas>
+                                        </div>
+                                        <div class="correlation-stats">
+                                            <div class="status status--success">Consistent cross-method signal</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="validation-summary card">
+                            <div class="card__header">
+                                <h3>Validation Summary</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="validation-grid">
+                                    <div class="validation-item">
+                                        <h4>Sulfur Consistency</h4>
+                                        <p>Strong correlation between XRF S and IC SO₄²⁻ validates measurement accuracy across both analytical platforms.</p>
+                                        <div class="status status--success">Validated</div>
+                                    </div>
+                                    <div class="validation-item">
+                                        <h4>Potassium Cross-Reference</h4>
+                                        <p>Consistent signal between XRF K and IC K⁺ confirms reliable detection of crustal and biomass burning sources.</p>
+                                        <div class="status status--success">Validated</div>
+                                    </div>
+                                    <div class="validation-item">
+                                        <h4>Crustal Elements</h4>
+                                        <p>Crustal elements show consistent patterns, especially evident in PC4 of IC PCA analysis.</p>
+                                        <div class="status status--success">Validated</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
