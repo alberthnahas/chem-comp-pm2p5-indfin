@@ -540,12 +540,53 @@ function createPotassiumCorrelationChart() {
 
 function populateInterpretations() { populateXRFInterpretations(); populateICInterpretations(); }
 function populateXRFInterpretations() {
-    const container = document.getElementById('xrfInterpretations'); if (!container) return; container.innerHTML = ''; appData.xrf_pca.PC.forEach((pc, index) => { const div = document.createElement('div'); div.className = `interpretation-item ${index === 0 ? 'active' : ''}`; div.dataset.pc = pc; div.innerHTML = `<h4>PC${pc} (${appData.xrf_pca.Explained_Variance[index]}%)</h4><p><strong>Dominant Loadings:</strong> ${appData.xrf_pca.Dominant_Loadings[index]}</p><p><strong>Interpretation:</strong> ${appData.xrf_pca.Interpretation[index]}</p>`; container.appendChild(div); });
-}
-function populateICInterpretations() {
-    const container = document.getElementById('icInterpretations'); if (!container) return; container.innerHTML = ''; appData.ic_pca.PC.forEach((pc, index) => { const div = document.createElement('div'); div.className = `interpretation-item ${index === 0 ? 'active' : ''}`; div.dataset.pc = pc; div.innerHTML = `<h4>PC${pc} (${appData.ic_pca.Explained_Variance[index]}%)</h4><p><strong>Dominant Loadings:</strong> ${appData.ic_pca.Dominant_Loadings[index]}</p><p><strong>Interpretation:</strong> ${appData.ic_pca.Interpretation[index]}</p>`; container.appendChild(div); });
+    const container = document.getElementById('xrfInterpretations');
+    if (!container) return;
+    container.innerHTML = '';
+
+    appData.xrf_pca.PC.forEach((pc, index) => {
+        // Only process if pc is one of 1, 2, 3, or 4
+        if (pc >= 1 && pc <= 4) {
+            const div = document.createElement('div');
+            // Make the item for PC1 active by default if it's being rendered
+            div.className = `interpretation-item${pc === 1 ? ' active' : ''}`;
+            div.dataset.pc = pc; // Use the actual pc value (1, 2, 3, or 4)
+            // Ensure data exists at the current index to prevent errors if arrays are mismatched
+            if (appData.xrf_pca.Explained_Variance[index] !== undefined &&
+                appData.xrf_pca.Dominant_Loadings[index] !== undefined &&
+                appData.xrf_pca.Interpretation[index] !== undefined) {
+                div.innerHTML = `<h4>PC${pc} (${appData.xrf_pca.Explained_Variance[index]}%)</h4><p><strong>Dominant Loadings:</strong> ${appData.xrf_pca.Dominant_Loadings[index]}</p><p><strong>Interpretation:</strong> ${appData.xrf_pca.Interpretation[index]}</p>`;
+                container.appendChild(div);
+            }
+        }
+    });
 }
 
+function populateICInterpretations() {
+    const container = document.getElementById('icInterpretations');
+    if (!container) return;
+    container.innerHTML = '';
+
+    appData.ic_pca.PC.forEach((pc, index) => {
+        // Only process if pc is one of 1, 2, 3, or 4
+        if (pc >= 1 && pc <= 4) {
+            const div = document.createElement('div');
+            // Make the item for PC1 active by default if it's being rendered
+            div.className = `interpretation-item${pc === 1 ? ' active' : ''}`;
+            div.dataset.pc = pc; // Use the actual pc value (1, 2, 3, or 4)
+            // Ensure data exists at the current index
+            if (appData.ic_pca.Explained_Variance[index] !== undefined &&
+                appData.ic_pca.Dominant_Loadings[index] !== undefined &&
+                appData.ic_pca.Interpretation[index] !== undefined) {
+                div.innerHTML = `<h4>PC${pc} (${appData.ic_pca.Explained_Variance[index]}%)</h4><p><strong>Dominant Loadings:</strong> ${appData.ic_pca.Dominant_Loadings[index]}</p><p><strong>Interpretation:</strong> ${appData.ic_pca.Interpretation[index]}</p>`;
+                container.appendChild(div);
+            }
+        }
+    });
+}
+
+// The main populateInterpretations function remains the same:
+// function populateInterpretations() { populateXRFInterpretations(); populateICInterpretations(); }
 function initializeInteractiveElements() { initializePCSelectors(); initializeSeasonalControls(); }
 function initializePCSelectors() {
     const xrfPcBtns = document.querySelectorAll('.pc-btn'); xrfPcBtns.forEach(btn => { btn.addEventListener('click', function() { const pc = parseInt(this.dataset.pc); xrfPcBtns.forEach(b => b.classList.remove('active')); this.classList.add('active'); updateXRFLoadingsChart(pc); document.querySelectorAll('#xrfInterpretations .interpretation-item').forEach((item, index) => item.classList.toggle('active', index === pc - 1)); }); });
