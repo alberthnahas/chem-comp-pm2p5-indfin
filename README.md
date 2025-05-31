@@ -6,6 +6,9 @@ This project focuses on the chemical component analysis of PM₂.₅ (Particulat
 
 The primary goal is to identify and characterize the chemical composition of PM₂.₅ and explore seasonal variations and potential sources of pollutants.
 
+### Interactive Dashboard
+Dashboard URL: [click here](https://cews.bmkg.go.id/tempatirk/CHEMCOMP/)
+
 ### Repository Structure
 ```
 chem-comp-pm2p5-indfin/
